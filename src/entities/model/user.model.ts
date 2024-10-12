@@ -1,8 +1,8 @@
-interface UserInterface  {
-   id: number 
-   email: string
-   password: string
-   name: string
+interface UserInterface {
+  id: number
+  email: string
+  password: string
+  name: string
 }
 
-export {UserInterface}
+export { UserInterface }

@@ -1,5 +1,9 @@
-import { UserInterface } from '../model/user.model';
+import { UserInterface } from '../model/user.model'
 
 export interface IAuthUsecase {
-    register(email: string, password: string, name: string): Promise<UserInterface>;
+  register(
+    email: string,
+    password: string,
+    name: string,
+  ): Promise<UserInterface>
 }

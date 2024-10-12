@@ -1,17 +1,17 @@
-import { PGPromiseAdapter } from './adapters/db.adapter';
-import { UserRepository } from './repositories/user.repository';
-import { AuthUsecase } from './usecases/auth.usecase';
-import { AuthController } from './controllers/auth.controller';
-import { registerAuthRoutes } from './routes/auth.route';
-import fastify from 'fastify';
+import { PGPromiseAdapter } from './adapters/db.adapter'
+import { UserRepository } from './repositories/user.repository'
+import { AuthUsecase } from './usecases/auth.usecase'
+import { AuthController } from './controllers/auth.controller'
+import { registerAuthRoutes } from './routes/auth.route'
+import fastify from 'fastify'
 
-const app = fastify();
-const dbAdapter = new PGPromiseAdapter();
-const userRepository = new UserRepository(dbAdapter);
-const authUsecase = new AuthUsecase(userRepository);
-const authContoller = new AuthController(authUsecase);
+const app = fastify()
+const dbAdapter = new PGPromiseAdapter()
+const userRepository = new UserRepository(dbAdapter)
+const authUsecase = new AuthUsecase(userRepository)
+const authContoller = new AuthController(authUsecase)
 
-registerAuthRoutes(app, authContoller);
+registerAuthRoutes(app, authContoller)
 
 app.listen({ port: 8080 }, (err, address) => {
   if (err) {
