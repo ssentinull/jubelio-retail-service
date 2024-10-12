@@ -1,0 +1,20 @@
+{
+  "name": "retail-service",
+  "version": "1.0.0",
+  "description": "A backend service for PT Kelola Bersama webstore.",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Ibnu Ahsani",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3"
+  }
+}
