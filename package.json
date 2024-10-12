@@ -12,10 +12,13 @@
   "author": "Ibnu Ahsani",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "fastify": "^5.0.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "pg-promise": "^11.10.0"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.42",
     "@types/node": "^22.7.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
