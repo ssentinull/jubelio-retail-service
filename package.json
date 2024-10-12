@@ -6,15 +6,18 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "start:prod": "node dist/server.js"
   },
   "author": "Ibnu Ahsani",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^5.0.0"
+    "fastify": "^5.0.0",
+    "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
 }
