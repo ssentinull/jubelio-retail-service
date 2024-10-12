@@ -1,5 +1,5 @@
-import { IAuthUsecase } from '../entities/usecase/auth.usecase'
-import { UserInterface } from '../entities/model/user.model'
+import { IAuthUsecase } from '../entities/usecases/auth.usecase'
+import { User } from '../entities/models/user.model'
 import { UserRepository } from '../repositories/user.repository'
 
 export class AuthUsecase implements IAuthUsecase {
@@ -9,11 +9,7 @@ export class AuthUsecase implements IAuthUsecase {
     this.userRepository = userRepository
   }
 
-  async register(
-    email: string,
-    password: string,
-    name: string,
-  ): Promise<UserInterface> {
+  async register(email: string, password: string, name: string): Promise<User> {
     if (!email || !password) {
       throw new Error('Name and email are required')
     }

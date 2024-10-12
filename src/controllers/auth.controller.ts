@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { UserInterface } from '../entities/model/user.model'
+import { User } from '../entities/models/user.model'
 import { AuthUsecase } from '../usecases/auth.usecase'
 
 export class AuthController {
@@ -11,7 +11,7 @@ export class AuthController {
 
   async register(request: FastifyRequest, reply: FastifyReply) {
     try {
-      const { email, password, name } = request.body as UserInterface
+      const { email, password, name } = request.body as User
       const user = await this.authUsecase.register(email, password, name)
       return reply.status(201).send(user)
     } catch (error) {

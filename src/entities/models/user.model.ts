@@ -1,8 +1,8 @@
-interface UserInterface {
+interface User {
   id: number
   email: string
   password: string
   name: string
 }
 
-export { UserInterface }
+export { User }
