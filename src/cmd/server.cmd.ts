@@ -1,8 +1,8 @@
-import { PGPromiseAdapter } from './adapters/db.adapter'
-import { UserRepository } from './repositories/user.repository'
-import { AuthUsecase } from './usecases/auth.usecase'
-import { AuthController } from './controllers/auth.controller'
-import { registerAuthRoutes } from './routes/auth.route'
+import { PGPromiseAdapter } from '../adapters/db.adapter'
+import { UserRepository } from '../repositories/user.repository'
+import { AuthUsecase } from '../usecases/auth.usecase'
+import { AuthController } from '../controllers/auth.controller'
+import { registerAuthRoutes } from '../routes/auth.route'
 import fastify from 'fastify'
 
 const app = fastify()

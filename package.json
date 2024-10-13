@@ -7,8 +7,8 @@
     "lint": "eslint",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "build": "tsc -p tsconfig.json",
-    "start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "start:prod": "node dist/index.js",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/cmd/server.cmd.ts",
+    "start:prod": "node dist/cmd/server.cmd.js",
     "migrate:up": "node dist/cmd/migration.cmd.js up",
     "migrate:down": "node dist/cmd/migration.cmd.js down"
   },
