@@ -38,4 +38,19 @@ CREATE TABLE warehouses (
   CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+CREATE TABLE warehouse_inventories (
+  id SERIAL PRIMARY KEY,
+  stock INTEGER NOT NULL DEFAULT 0,
+  product_id INTEGER NOT NULL,
+  warehouse_id INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(255) NOT NULL,
+  updated_at TIMESTAMP,
+  updated_by VARCHAR(255),
+  deleted_at TIMESTAMP,
+  deleted_by VARCHAR(255),
+  CONSTRAINT fk_product FOREIGN KEY(product_id) REFERENCES products(id),
+  CONSTRAINT fk_warehouse FOREIGN KEY(warehouse_id) REFERENCES warehouses(id)
+);
+
 COMMIT;

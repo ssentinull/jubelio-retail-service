@@ -9,6 +9,12 @@ export class WarehouseRepository implements IWarehouseRepository {
     this.dbAdapter = dbAdapter
   }
 
+  async getWarehouseById(id: number): Promise<Warehouse | null> {
+    const query =
+      'SELECT id, name, user_id, created_at FROM warehouses WHERE id = $1'
+    return this.dbAdapter.queryOne<Warehouse>(query, [id])
+  }
+
   async createWarehouse(warehouse: Omit<Warehouse, 'id'>): Promise<Warehouse> {
     const createdAt = new Date()
     const query = `INSERT INTO warehouses (name, user_id, created_at, created_by) VALUES ($1, $2, $3, $4) RETURNING id, name, user_id, created_at, created_by`

@@ -11,6 +11,10 @@ import { WarehouseRepository } from '../repositories/warehouse.repository'
 import { WarehouseUsecase } from '../usecases/warehouse.usecase'
 import { WarehouseController } from '../controllers/warehouse.controller'
 import { registerWarehouseRoutes } from '../routes/warehouse.route'
+import { InventoryRepository } from '../repositories/inventory.repository'
+import { InventoryUsecase } from '../usecases/inventory.usecase'
+import { InventoryController } from '../controllers/inventory.controller'
+import { registerInventoryRoutes } from '../routes/inventory.route'
 import { config } from '../config/env.config'
 import fastify from 'fastify'
 
@@ -30,10 +34,20 @@ const warehouseUsecase = new WarehouseUsecase(
 )
 const warehouseController = new WarehouseController(warehouseUsecase)
 
+const inventoryRepository = new InventoryRepository(dbAdapter)
+const inventoryUsecase = new InventoryUsecase(
+  inventoryRepository,
+  userRepository,
+  productRepository,
+  warehouseRepository,
+)
+const inventoryController = new InventoryController(inventoryUsecase)
+
 const app = fastify()
 registerAuthRoutes(app, authContoller)
 registerProductRoutes(app, productController)
 registerWarehouseRoutes(app, warehouseController)
+registerInventoryRoutes(app, inventoryController)
 
 app.listen({ port: parseInt(config.Port) }, (err, address) => {
   if (err) {
