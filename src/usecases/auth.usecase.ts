@@ -15,6 +15,11 @@ export class AuthUsecase implements IAuthUsecase {
       throw new Error('email and password are required')
     }
 
+    const existingUser = await this.userRepository.getUserByEmail(user.email)
+    if (!existingUser || existingUser.id != 0) {
+      throw Error(`user with email ${user.email} already exists`)
+    }
+
     const hashedPassword = await bcrypt.hash(user.password, 10)
     user.password = hashedPassword
 

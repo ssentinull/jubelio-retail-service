@@ -9,9 +9,10 @@ export class UserRepository implements IUserRepository {
     this.dbAdapter = dbAdapter
   }
 
-  async getUserById(id: number): Promise<User | null> {
-    const query = 'SELECT id, name, email FROM users WHERE id = $1'
-    return this.dbAdapter.queryOne<User>(query, [id])
+  async getUserByEmail(email: string): Promise<User | null> {
+    const query =
+      'SELECT id, name, email, created_at FROM users WHERE email = $1'
+    return this.dbAdapter.queryOne<User>(query, [email])
   }
 
   async createUser(user: Omit<User, 'id'>): Promise<User> {
