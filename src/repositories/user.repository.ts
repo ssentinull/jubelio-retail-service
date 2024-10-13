@@ -25,4 +25,9 @@ export class UserRepository implements IUserRepository {
       createdAt,
     ])
   }
+
+  async getPasswordByEmail(email: string): Promise<User | null> {
+    const query = `SELECT password FROM users WHERE email = $1`
+    return this.dbAdapter.queryOne<User>(query, [email])
+  }
 }

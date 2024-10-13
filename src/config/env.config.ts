@@ -28,4 +28,9 @@ export const config = {
     (() => {
       throw new Error('DB_PASWORD is required')
     })(),
+  JwtSecretKey:
+    process.env.JWT_SECRET_KEY ??
+    (() => {
+      throw new Error('JWT_SECRET_KEY is required')
+    })(),
 }
