@@ -1,16 +1,16 @@
 import pgPromise = require('pg-promise')
 import { IDatabaseAdapter } from '../entities/adapters/db.adapter'
-
-const pgp = pgPromise()
+import { config } from '../config/env.config'
 
 const dbConfig = {
-  host: 'localhost',
-  port: 5432,
-  database: 'library',
-  user: 'efishery',
-  password: '',
+  host: config.DbHost,
+  port: parseInt(config.DbPort),
+  database: config.DbName,
+  user: config.DbUsername,
+  password: config.DbPasword,
 }
 
+const pgp = pgPromise()
 const db = pgp(dbConfig)
 
 export class PGPromiseAdapter implements IDatabaseAdapter {
