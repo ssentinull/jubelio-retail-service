@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 import { IAuthUsecase } from '../entities/usecases/auth.usecase'
 import { User } from '../entities/models/user.model'
 import { UserRepository } from '../repositories/user.repository'
@@ -9,10 +10,14 @@ export class AuthUsecase implements IAuthUsecase {
     this.userRepository = userRepository
   }
 
-  async register(email: string, password: string, name: string): Promise<User> {
-    if (!email || !password) {
-      throw new Error('Name and email are required')
+  async register(user: User): Promise<User> {
+    if (!user.email || !user.password) {
+      throw new Error('email and password are required')
     }
-    return this.userRepository.createUser({ email, password, name })
+
+    const hashedPassword = await bcrypt.hash(user.password, 10)
+    user.password = hashedPassword
+
+    return this.userRepository.createUser(user)
   }
 }

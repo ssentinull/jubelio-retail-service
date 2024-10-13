@@ -5,5 +5,5 @@ export function registerAuthRoutes(
   fastify: FastifyInstance,
   userController: AuthController,
 ) {
-  fastify.post('/register', userController.register.bind(userController))
+  fastify.post('/auth/register', userController.register.bind(userController))
 }

@@ -3,6 +3,7 @@ interface User {
   email: string
   password: string
   name: string
+  created_at: string
 }
 
 export { User }

@@ -11,10 +11,11 @@ export class AuthController {
 
   async register(request: FastifyRequest, reply: FastifyReply) {
     try {
-      const { email, password, name } = request.body as User
-      const user = await this.authUsecase.register(email, password, name)
+      const payload = request.body as User
+      const user = await this.authUsecase.register(payload)
       return reply.status(201).send(user)
     } catch (error) {
+      console.log(error)
       return reply.code(500).send({ message: 'error' })
     }
   }
