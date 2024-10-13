@@ -3,6 +3,11 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 export const config = {
+  Port:
+    process.env.PORT ??
+    (() => {
+      throw new Error('PORT is required')
+    })(),
   DbHost:
     process.env.DB_HOST ??
     (() => {
