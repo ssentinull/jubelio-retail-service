@@ -12,4 +12,8 @@ interface Product {
   deleted_by: string
 }
 
-export { Product }
+interface DeleteRequest {
+  id: number
+}
+
+export { Product, DeleteRequest }

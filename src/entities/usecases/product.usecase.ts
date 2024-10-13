@@ -3,4 +3,5 @@ import { Product } from '../models/product.model'
 
 export interface IProductUsecase {
   createProduct(user: User, payload: Product): Promise<Product>
+  deleteProduct(user: User, id: number): Promise<Product>
 }

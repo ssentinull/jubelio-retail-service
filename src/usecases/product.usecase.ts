@@ -35,4 +35,20 @@ export class ProductUsecase implements IProductUsecase {
       throw error
     }
   }
+
+  async deleteProduct(user: User, id: number): Promise<Product> {
+    try {
+      const existingProduct = await this.productRepository.getProductById(id)
+      if (!existingProduct) {
+        throw constants.DATA_NOT_FOUND
+      }
+
+      existingProduct.deleted_by = user.email
+
+      return this.productRepository.deleteProduct(existingProduct)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
 }
