@@ -12,18 +12,23 @@ export class AuthUsecase implements IAuthUsecase {
   }
 
   async register(user: User): Promise<User> {
-    if (!user.email || !user.password) {
-      throw constants.INVALID_PAYLOAD
+    try {
+      if (!user.email || !user.password) {
+        throw constants.INVALID_PAYLOAD
+      }
+
+      const existingUser = await this.userRepository.getUserByEmail(user.email)
+      if (!existingUser || existingUser.id != 0) {
+        throw constants.DUPLICATE_ROW
+      }
+
+      const hashedPassword = await bcrypt.hash(user.password, 10)
+      user.password = hashedPassword
+
+      return this.userRepository.createUser(user)
+    } catch (error) {
+      console.log(error)
+      throw error
     }
-
-    const existingUser = await this.userRepository.getUserByEmail(user.email)
-    if (!existingUser || existingUser.id != 0) {
-      throw constants.DUPLICATE_ROW
-    }
-
-    const hashedPassword = await bcrypt.hash(user.password, 10)
-    user.password = hashedPassword
-
-    return this.userRepository.createUser(user)
   }
 }
