@@ -21,7 +21,7 @@ export class AuthController {
       switch (error) {
         case constants.INVALID_PAYLOAD:
           return reply.code(400).send({ message: (error as Error).message })
-        case constants.DUPLICATE_ROW:
+        case constants.DUPLICATE_DATA:
           return reply.code(409).send({ message: (error as Error).message })
         default:
           return reply.code(500).send({ message: 'internal server error' })
@@ -39,7 +39,7 @@ export class AuthController {
       switch (error) {
         case constants.INVALID_USERNAME_PASSWORD:
           return reply.code(401).send({ message: (error as Error).message })
-        case constants.NOT_FOUND:
+        case constants.DATA_NOT_FOUND:
           return reply.code(404).send({ message: (error as Error).message })
         default:
           return reply.code(500).send({ message: 'internal server error' })

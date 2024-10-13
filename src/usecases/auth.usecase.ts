@@ -22,7 +22,7 @@ export class AuthUsecase implements IAuthUsecase {
 
       const existingUser = await this.userRepository.getUserByEmail(user.email)
       if (existingUser != null) {
-        throw constants.DUPLICATE_ROW
+        throw constants.DUPLICATE_DATA
       }
 
       const saltRounds = 10
@@ -48,13 +48,13 @@ export class AuthUsecase implements IAuthUsecase {
         payload.email,
       )
       if (!existingUser) {
-        throw constants.NOT_FOUND
+        throw constants.DATA_NOT_FOUND
       }
 
       const existingUserWithPassword =
         await this.userRepository.getPasswordByEmail(payload.email)
       if (!existingUserWithPassword) {
-        throw constants.NOT_FOUND
+        throw constants.DATA_NOT_FOUND
       }
 
       const isMatch = await bcrypt.compare(

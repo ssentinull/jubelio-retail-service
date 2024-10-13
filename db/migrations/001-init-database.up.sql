@@ -4,10 +4,25 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) NOT NULL DEFAULT '',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
-  deleteed_at TIMESTAMP
+  deleted_at TIMESTAMP
+);
+
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  price FLOAT NOT NULL DEFAULT 0.0,
+  user_id INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(255) NOT NULL,
+  updated_at TIMESTAMP,
+  updated_by VARCHAR(255),
+  deleted_at TIMESTAMP,
+  deleted_by VARCHAR(255),
+  CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 COMMIT;

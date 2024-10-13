@@ -3,8 +3,8 @@ import { AuthController } from '../controllers/auth.controller'
 
 export function registerAuthRoutes(
   fastify: FastifyInstance,
-  userController: AuthController,
+  authContoller: AuthController,
 ) {
-  fastify.post('/auth/register', userController.register.bind(userController))
-  fastify.post('/auth/login', userController.login.bind(userController))
+  fastify.post('/auth/register', authContoller.register.bind(authContoller))
+  fastify.post('/auth/login', authContoller.login.bind(authContoller))
 }
