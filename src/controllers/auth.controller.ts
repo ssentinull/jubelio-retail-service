@@ -11,10 +11,10 @@ export class AuthController {
     this.authUsecase = authUsecase
   }
 
-  async register(request: FastifyRequest, reply: FastifyReply) {
+  async registerUser(request: FastifyRequest, reply: FastifyReply) {
     try {
       const payload = request.body as User
-      const user = await this.authUsecase.register(payload)
+      const user = await this.authUsecase.registerUser(payload)
       return reply.status(201).send(user)
     } catch (error) {
       console.log(error)
@@ -29,10 +29,10 @@ export class AuthController {
     }
   }
 
-  async login(request: FastifyRequest, reply: FastifyReply) {
+  async loginUser(request: FastifyRequest, reply: FastifyReply) {
     try {
       const payload = request.body as LoginRequest
-      const jwtToken = await this.authUsecase.login(payload)
+      const jwtToken = await this.authUsecase.loginUser(payload)
       return reply.status(200).send(jwtToken)
     } catch (error) {
       console.log(error)

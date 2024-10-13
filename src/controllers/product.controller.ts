@@ -13,7 +13,7 @@ export class ProductController {
     this.productUsecase = productUsecase
   }
 
-  async create(request: FastifyRequest, reply: FastifyReply) {
+  async createProduct(request: FastifyRequest, reply: FastifyReply) {
     try {
       const authHeader = request.headers['authorization']
       if (!authHeader) {
@@ -50,7 +50,7 @@ export class ProductController {
     }
   }
 
-  async delete(request: FastifyRequest, reply: FastifyReply) {
+  async deleteProduct(request: FastifyRequest, reply: FastifyReply) {
     try {
       const authHeader = request.headers['authorization']
       if (!authHeader) {

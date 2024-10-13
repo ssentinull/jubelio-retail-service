@@ -14,7 +14,7 @@ export class AuthUsecase implements IAuthUsecase {
     this.userRepository = userRepository
   }
 
-  async register(user: User): Promise<User> {
+  async registerUser(user: User): Promise<User> {
     try {
       if (!user.email || !user.password) {
         throw constants.INVALID_PAYLOAD
@@ -38,7 +38,7 @@ export class AuthUsecase implements IAuthUsecase {
     }
   }
 
-  async login(payload: LoginRequest): Promise<string> {
+  async loginUser(payload: LoginRequest): Promise<string> {
     try {
       if (!payload.email || !payload.password) {
         throw constants.INVALID_PAYLOAD

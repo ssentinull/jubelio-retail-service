@@ -5,6 +5,6 @@ export function registerAuthRoutes(
   fastify: FastifyInstance,
   authContoller: AuthController,
 ) {
-  fastify.post('/auth/register', authContoller.register.bind(authContoller))
-  fastify.post('/auth/login', authContoller.login.bind(authContoller))
+  fastify.post('/auth/register', authContoller.registerUser.bind(authContoller))
+  fastify.post('/auth/login', authContoller.loginUser.bind(authContoller))
 }

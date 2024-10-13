@@ -5,9 +5,12 @@ export function registerProductRoutes(
   fastify: FastifyInstance,
   productController: ProductController,
 ) {
-  fastify.post('/product', productController.create.bind(productController))
+  fastify.post(
+    '/products',
+    productController.createProduct.bind(productController),
+  )
   fastify.delete(
-    '/product/:id',
-    productController.delete.bind(productController),
+    '/products/:id',
+    productController.deleteProduct.bind(productController),
   )
 }
