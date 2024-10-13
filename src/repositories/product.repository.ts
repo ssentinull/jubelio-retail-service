@@ -1,12 +1,21 @@
 import { IDatabaseAdapter } from '../entities/adapters/db.adapter'
 import { IProductRepository } from '../entities/repositories/product.repository'
-import { Product } from '../entities/models/product.model'
+import { GetRequest, Product } from '../entities/models/product.model'
 
 export class ProductRepository implements IProductRepository {
   private dbAdapter: IDatabaseAdapter
 
   constructor(dbAdapter: IDatabaseAdapter) {
     this.dbAdapter = dbAdapter
+  }
+
+  async getProducts(params: GetRequest): Promise<Product[]> {
+    const query = `SELECT id, name, description, price, user_id, created_at, created_by FROM products WHERE user_id = $1 LIMIT $2 OFFSET $3`
+    return this.dbAdapter.query<Product>(query, [
+      params.userId,
+      params.size,
+      params.offset,
+    ])
   }
 
   async getProductById(id: number): Promise<Product | null> {

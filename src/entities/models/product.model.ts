@@ -16,4 +16,32 @@ interface DeleteRequest {
   id: number
 }
 
-export { Product, DeleteRequest }
+class GetRequest {
+  userId: number
+  page: number
+  size: number
+  offset: number
+
+  constructor(userId: number, page: number, size: number) {
+    this.userId = userId
+    this.page = page
+    this.size = size
+    this.offset = 0
+
+    this.validate()
+  }
+
+  validate() {
+    if (this.page <= 0) {
+      this.page = 1
+    }
+
+    if (this.size > 25 || this.size <= 0) {
+      this.size = 25
+    }
+
+    this.offset = (this.page - 1) * this.size
+  }
+}
+
+export { Product, DeleteRequest, GetRequest }

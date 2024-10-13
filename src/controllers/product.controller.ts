@@ -1,5 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { Product, DeleteRequest } from '../entities/models/product.model'
+import {
+  Product,
+  DeleteRequest,
+  GetRequest,
+} from '../entities/models/product.model'
 import { User } from '../entities/models/user.model'
 import { ProductUsecase } from '../usecases/product.usecase'
 import * as constants from '../constants/error.constant'
@@ -11,6 +15,47 @@ export class ProductController {
 
   constructor(productUsecase: ProductUsecase) {
     this.productUsecase = productUsecase
+  }
+
+  async getProducts(
+    request: FastifyRequest<{ Querystring: GetRequest }>,
+    reply: FastifyReply,
+  ) {
+    try {
+      const authHeader = request.headers['authorization']
+      if (!authHeader) {
+        return reply
+          .status(401)
+          .send({ message: 'Authorization header not provided' })
+      }
+
+      const token = authHeader.split(' ')[1]
+      if (!token) {
+        return reply.status(401).send({ message: 'Token not provided' })
+      }
+
+      let user: User
+      try {
+        const claims = jwt.verify(token, config.JwtSecretKey)
+        user = claims as User
+      } catch (error) {
+        return reply.status(401).send({ message: 'Invalid token' })
+      }
+
+      const { page, size } = request.query
+      const params = new GetRequest(user.id, page, size)
+      const product = await this.productUsecase.getProducts(params)
+
+      return reply.status(200).send(product)
+    } catch (error) {
+      console.log(error)
+      switch (error) {
+        case constants.DATA_NOT_FOUND:
+          return reply.code(404).send({ message: (error as Error).message })
+        default:
+          return reply.code(500).send({ message: 'internal server error' })
+      }
+    }
   }
 
   async createProduct(request: FastifyRequest, reply: FastifyReply) {

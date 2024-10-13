@@ -1,5 +1,5 @@
 import { User } from '../entities/models/user.model'
-import { Product } from '../entities/models/product.model'
+import { GetRequest, Product } from '../entities/models/product.model'
 import { IProductUsecase } from '../entities/usecases/product.usecase'
 import { ProductRepository } from '../repositories/product.repository'
 import { UserRepository } from 'src/repositories/user.repository'
@@ -17,11 +17,23 @@ export class ProductUsecase implements IProductUsecase {
     this.userRepository = userRepository
   }
 
+  async getProducts(params: GetRequest): Promise<Product[]> {
+    try {
+      const existingUser = await this.userRepository.getUserById(params.userId)
+      if (!existingUser) {
+        throw constants.DATA_NOT_FOUND
+      }
+
+      return this.productRepository.getProducts(params)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
   async createProduct(user: User, payload: Product): Promise<Product> {
     try {
-      const existingUser = await this.userRepository.getPasswordByEmail(
-        user.email,
-      )
+      const existingUser = await this.userRepository.getUserById(user.id)
       if (!existingUser) {
         throw constants.DATA_NOT_FOUND
       }

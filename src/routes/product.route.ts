@@ -5,6 +5,10 @@ export function registerProductRoutes(
   fastify: FastifyInstance,
   productController: ProductController,
 ) {
+  fastify.get(
+    '/products',
+    productController.getProducts.bind(productController),
+  )
   fastify.post(
     '/products',
     productController.createProduct.bind(productController),
