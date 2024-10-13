@@ -4,12 +4,13 @@
   "description": "A backend service for PT Kelola Bersama webstore.",
   "main": "app.js",
   "scripts": {
+    "lint": "eslint",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "build": "tsc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start:prod": "node dist/index.js",
-    "lint": "eslint",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "migrate:up": "node dist/cmd/migration.cmd.js up",
+    "migrate:down": "node dist/cmd/migration.cmd.js down"
   },
   "author": "Ibnu Ahsani",
   "license": "ISC",

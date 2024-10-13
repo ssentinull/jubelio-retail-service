@@ -34,3 +34,5 @@ export class PGPromiseAdapter implements IDatabaseAdapter {
     pgp.end()
   }
 }
+
+export { db }
