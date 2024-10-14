@@ -1,6 +1,6 @@
 interface Inventory {
   id: number
-  stock: string
+  stock: number
   product_id: number
   warehouse_id: number
   created_at: string
@@ -11,4 +11,20 @@ interface Inventory {
   deleted_by: string
 }
 
-export { Inventory }
+interface InventoryMovement {
+  id: number
+  movement_type: string
+  movement_size: number
+  inventory_id: number
+  created_at: string
+  created_by: string
+}
+
+interface MoveRequest {
+  id: number
+  movement_type: string
+  movement_size: number
+  inventory_id: number
+}
+
+export { Inventory, InventoryMovement, MoveRequest }

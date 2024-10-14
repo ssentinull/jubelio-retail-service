@@ -1,6 +1,11 @@
-import * as constants from '../constants/error.constant'
+import * as errorConstants from '../constants/error.constant'
+import * as inventoryConstants from '../constants/inventory.constant'
 import { User } from '../entities/models/user.model'
-import { Inventory } from '../entities/models/inventory.model'
+import {
+  Inventory,
+  InventoryMovement,
+  MoveRequest,
+} from '../entities/models/inventory.model'
 import { IInventoryUsecase } from '../entities/usecases/inventory.usecase'
 import { InventoryRepository } from '../repositories/inventory.repository'
 import { UserRepository } from '../repositories/user.repository'
@@ -29,24 +34,83 @@ export class InventoryUsecase implements IInventoryUsecase {
     try {
       const existingUser = await this.userRepository.getUserById(user.id)
       if (!existingUser) {
-        throw constants.DATA_NOT_FOUND
+        throw errorConstants.DATA_NOT_FOUND
       }
 
       const existingProduct = await this.productRepository.getProductById(
         payload.product_id,
       )
       if (!existingProduct) {
-        throw constants.DATA_NOT_FOUND
+        throw errorConstants.DATA_NOT_FOUND
       }
 
       const existingWarehouse = await this.warehouseRepository.getWarehouseById(
         payload.warehouse_id,
       )
       if (!existingWarehouse) {
-        throw constants.DATA_NOT_FOUND
+        throw errorConstants.DATA_NOT_FOUND
       }
 
+      // TODO: check for duplicate inventory
+
+      payload.created_at = new Date().toLocaleString()
+      payload.created_by = user.email
+
       return this.inventoryRepository.createInventory(payload)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  async moveInventory(
+    user: User,
+    payload: MoveRequest,
+  ): Promise<InventoryMovement> {
+    try {
+      const existingUser = await this.userRepository.getUserById(user.id)
+      if (!existingUser) {
+        throw errorConstants.DATA_NOT_FOUND
+      }
+
+      const existingInventory = await this.inventoryRepository.getInventoryById(
+        payload.inventory_id,
+      )
+      if (!existingInventory) {
+        throw errorConstants.DATA_NOT_FOUND
+      }
+
+      switch (payload.movement_type) {
+        case inventoryConstants.INVENTORY_MOVEMENT_TYPE_USER_PURCHASE:
+        case inventoryConstants.INVENTORY_MOVEMENT_TYPE_ADMIN_REDUCE_STOCK:
+          existingInventory.stock -= payload.movement_size
+          if (existingInventory.stock < 0) {
+            throw errorConstants.INVALID_LOGIC
+          }
+          break
+
+        case inventoryConstants.INVENTORY_MOVEMENT_TYPE_ADMIN_ADD_STOCK:
+          existingInventory.stock += payload.movement_size
+          break
+
+        default:
+          throw errorConstants.ENUM_NOT_DEFINED
+      }
+
+      const now = new Date().toLocaleString()
+      existingInventory.updated_by = user.email
+      existingInventory.updated_at = now
+      await this.inventoryRepository.updateInventoryStock(existingInventory)
+
+      const inventoryMovement: Omit<InventoryMovement, 'id'> = {
+        movement_type: payload.movement_type,
+        movement_size: payload.movement_size,
+        inventory_id: payload.inventory_id,
+        created_at: now,
+        created_by: user.email,
+      }
+
+      return this.inventoryRepository.createInventoryMovement(inventoryMovement)
     } catch (error) {
       console.log(error)
       throw error

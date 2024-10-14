@@ -53,4 +53,14 @@ CREATE TABLE warehouse_inventories (
   CONSTRAINT fk_warehouse FOREIGN KEY(warehouse_id) REFERENCES warehouses(id)
 );
 
+CREATE TABLE inventory_movements (
+  id SERIAL PRIMARY KEY,
+  movement_type VARCHAR(50) NOT NULL,
+  movement_size INTEGER NOT NULL DEFAULT 0,
+  inventory_id INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(255) NOT NULL,
+  CONSTRAINT fk_inventory FOREIGN KEY(inventory_id) REFERENCES warehouse_inventories(id)
+);
+
 COMMIT;
