@@ -2,8 +2,8 @@ import * as constants from '../constants/error.constant'
 import { User } from '../entities/models/user.model'
 import { Warehouse } from '../entities/models/warehouse.model'
 import { WarehouseRepository } from '../repositories/warehouse.repository'
-import { UserRepository } from 'src/repositories/user.repository'
-import { IWarehouseUsecase } from 'src/entities/usecases/warehouse.usecase'
+import { UserRepository } from '../repositories/user.repository'
+import { IWarehouseUsecase } from '../entities/usecases/warehouse.usecase'
 
 export class WarehouseUsecase implements IWarehouseUsecase {
   private warehouseRepository: WarehouseRepository

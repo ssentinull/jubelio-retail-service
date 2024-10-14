@@ -10,7 +10,7 @@ export class ProductRepository implements IProductRepository {
   }
 
   async getProducts(params: GetRequest): Promise<Product[]> {
-    const query = `SELECT id, name, description, price, user_id, created_at, created_by FROM products WHERE user_id = $1 LIMIT $2 OFFSET $3`
+    const query = `SELECT id, name, description, price, user_id, created_at, created_by FROM products WHERE user_id = $1 ORDER BY id DESC LIMIT $2 OFFSET $3`
     return this.dbAdapter.query<Product>(query, [
       params.userId,
       params.size,

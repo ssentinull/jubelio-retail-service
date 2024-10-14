@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { User } from '../entities/models/user.model'
-import { LoginRequest, JwtUserClaims } from 'src/entities/models/auth.model'
+import { LoginRequest, JwtUserClaims } from '../entities/models/auth.model'
 import { IAuthUsecase } from '../entities/usecases/auth.usecase'
 import { UserRepository } from '../repositories/user.repository'
 import * as constants from '../constants/error.constant'

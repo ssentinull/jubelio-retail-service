@@ -6,7 +6,7 @@ import {
   GetRequest,
   Inventory,
   MoveRequest,
-} from 'src/entities/models/inventory.model'
+} from '../entities/models/inventory.model'
 import { InventoryUsecase } from '../usecases/inventory.usecase'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import {
@@ -108,7 +108,10 @@ export class InventoryController {
     }
   }
 
-  async getInventoryMovements(request: FastifyRequest, reply: FastifyReply) {
+  async getInventoryMovements(
+    request: FastifyRequest<{ Querystring: GetRequest }>,
+    reply: FastifyReply,
+  ) {
     try {
       const authHeader = request.headers['authorization']
       if (!authHeader) {
@@ -130,7 +133,17 @@ export class InventoryController {
         return reply.status(401).send(errorResponse('invalid token'))
       }
 
-      const params = request.params as GetRequest
+      const requestParams = request.params as GetRequest
+      const { page, size } = request.query
+
+      const params = new GetRequest(
+        requestParams.inventory_id,
+        0,
+        0,
+        page,
+        size,
+      )
+
       const inventory = await this.inventoryUsecase.getInventoryMovements(
         user,
         params,

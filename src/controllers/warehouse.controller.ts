@@ -4,7 +4,7 @@ import { config } from '../config/env.config'
 import { User } from '../entities/models/user.model'
 import { WarehouseUsecase } from '../usecases/warehouse.usecase'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { Warehouse } from 'src/entities/models/warehouse.model'
+import { Warehouse } from '../entities/models/warehouse.model'
 import {
   errorResponse,
   successResponse,

@@ -10,8 +10,8 @@ import {
 import { IInventoryUsecase } from '../entities/usecases/inventory.usecase'
 import { InventoryRepository } from '../repositories/inventory.repository'
 import { UserRepository } from '../repositories/user.repository'
-import { ProductRepository } from 'src/repositories/product.repository'
-import { WarehouseRepository } from 'src/repositories/warehouse.repository'
+import { ProductRepository } from '../repositories/product.repository'
+import { WarehouseRepository } from '../repositories/warehouse.repository'
 
 export class InventoryUsecase implements IInventoryUsecase {
   private inventoryRepository: InventoryRepository
@@ -52,11 +52,13 @@ export class InventoryUsecase implements IInventoryUsecase {
         throw errorConstants.DATA_NOT_FOUND
       }
 
-      const getInventoryParams: GetRequest = {
-        product_id: payload.product_id,
-        warehouse_id: payload.warehouse_id,
-        inventory_id: 0,
-      }
+      const getInventoryParams = new GetRequest(
+        0,
+        payload.product_id,
+        payload.warehouse_id,
+        0,
+        0,
+      )
 
       const existingInventory =
         await this.inventoryRepository.getInventory(getInventoryParams)

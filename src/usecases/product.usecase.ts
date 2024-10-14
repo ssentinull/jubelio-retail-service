@@ -2,7 +2,7 @@ import { User } from '../entities/models/user.model'
 import { GetRequest, Product } from '../entities/models/product.model'
 import { IProductUsecase } from '../entities/usecases/product.usecase'
 import { ProductRepository } from '../repositories/product.repository'
-import { UserRepository } from 'src/repositories/user.repository'
+import { UserRepository } from '../repositories/user.repository'
 import * as constants from '../constants/error.constant'
 
 export class ProductUsecase implements IProductUsecase {
