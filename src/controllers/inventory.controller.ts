@@ -53,6 +53,8 @@ export class InventoryController {
       switch (error) {
         case constants.DATA_NOT_FOUND:
           return reply.code(404).send(errorResponse((error as Error).message))
+        case constants.DUPLICATE_DATA:
+          return reply.code(409).send(errorResponse((error as Error).message))
         default:
           return reply.code(500).send(errorResponse('internal server error'))
       }

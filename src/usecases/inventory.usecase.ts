@@ -2,6 +2,7 @@ import * as errorConstants from '../constants/error.constant'
 import * as inventoryConstants from '../constants/inventory.constant'
 import { User } from '../entities/models/user.model'
 import {
+  GetRequest,
   Inventory,
   InventoryMovement,
   MoveRequest,
@@ -51,7 +52,16 @@ export class InventoryUsecase implements IInventoryUsecase {
         throw errorConstants.DATA_NOT_FOUND
       }
 
-      // TODO: check for duplicate inventory
+      const getInventoryParams: GetRequest = {
+        product_id: payload.product_id,
+        warehouse_id: payload.warehouse_id,
+      }
+
+      const existingInventory =
+        await this.inventoryRepository.getInventory(getInventoryParams)
+      if (existingInventory) {
+        throw errorConstants.DUPLICATE_DATA
+      }
 
       payload.created_at = new Date().toLocaleString()
       payload.created_by = user.email

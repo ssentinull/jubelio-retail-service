@@ -27,4 +27,9 @@ interface MoveRequest {
   inventory_id: number
 }
 
-export { Inventory, InventoryMovement, MoveRequest }
+interface GetRequest {
+  product_id: number
+  warehouse_id: number
+}
+
+export { Inventory, InventoryMovement, MoveRequest, GetRequest }

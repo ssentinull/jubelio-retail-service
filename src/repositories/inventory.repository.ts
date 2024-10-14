@@ -1,6 +1,7 @@
 import { IDatabaseAdapter } from '../entities/adapters/db.adapter'
 import { IInventoryRepository } from '../entities/repositories/inventory.repository'
 import {
+  GetRequest,
   Inventory,
   InventoryMovement,
 } from '../entities/models/inventory.model'
@@ -15,6 +16,14 @@ export class InventoryRepository implements IInventoryRepository {
   async getInventoryById(id: number): Promise<Inventory | null> {
     const query = `SELECT id, stock, product_id, warehouse_id, created_at, created_by FROM warehouse_inventories WHERE id = $1`
     return this.dbAdapter.queryOne<Inventory>(query, [id])
+  }
+
+  async getInventory(params: GetRequest): Promise<Inventory | null> {
+    const query = `SELECT id, stock, product_id, warehouse_id, created_at, created_by FROM warehouse_inventories WHERE product_id = $1 AND warehouse_id = $2`
+    return this.dbAdapter.queryOne<Inventory>(query, [
+      params.product_id,
+      params.warehouse_id,
+    ])
   }
 
   async createInventory(inventory: Omit<Inventory, 'id'>): Promise<Inventory> {
