@@ -26,6 +26,11 @@ export class InventoryRepository implements IInventoryRepository {
     ])
   }
 
+  async getInventories(params: GetRequest): Promise<Inventory[]> {
+    const query = `SELECT id, stock, product_id, warehouse_id, created_at, created_by FROM warehouse_inventories WHERE warehouse_id = $1`
+    return this.dbAdapter.query<Inventory>(query, [params.warehouse_id])
+  }
+
   async createInventory(inventory: Omit<Inventory, 'id'>): Promise<Inventory> {
     const query = `INSERT INTO warehouse_inventories (stock, product_id, warehouse_id, created_at, created_by) VALUES ($1, $2, $3, $4, $5) RETURNING id, stock, product_id, warehouse_id, created_at, created_by`
     return this.dbAdapter.insert<Inventory>(query, [

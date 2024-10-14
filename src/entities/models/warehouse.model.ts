@@ -1,3 +1,5 @@
+import { Inventory } from './inventory.model'
+
 interface Warehouse {
   id: number
   name: string
@@ -10,4 +12,18 @@ interface Warehouse {
   deleted_by: string
 }
 
-export { Warehouse }
+interface WarehouseInventory {
+  id: number
+  name: string
+  user_id: number
+  created_at: string
+  created_by: string
+  inventories: Inventory[]
+}
+
+interface GetInventoriesRequest {
+  warehouse_id: number
+  user_id: number
+}
+
+export { Warehouse, WarehouseInventory, GetInventoriesRequest }

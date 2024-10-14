@@ -27,14 +27,15 @@ const productRepository = new ProductRepository(dbAdapter)
 const productUsecase = new ProductUsecase(productRepository, userRepository)
 const productController = new ProductController(productUsecase)
 
+const inventoryRepository = new InventoryRepository(dbAdapter)
 const warehouseRepository = new WarehouseRepository(dbAdapter)
 const warehouseUsecase = new WarehouseUsecase(
   warehouseRepository,
   userRepository,
+  inventoryRepository,
 )
 const warehouseController = new WarehouseController(warehouseUsecase)
 
-const inventoryRepository = new InventoryRepository(dbAdapter)
 const inventoryUsecase = new InventoryUsecase(
   inventoryRepository,
   userRepository,

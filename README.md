@@ -36,4 +36,4 @@ The db schema for the project can be found [here](https://dbdiagram.io/d/Jubelio
 
 ## API Collection
 
-The REST API collection can be found [here](https://drive.google.com/file/d/1k5D9uvZBSoqySg2-hoOZnYJBpZK0-Yke/view?usp=sharing) and can accessed by importing it using [Insomnia](https://insomnia.rest/).
+The REST API collection can be found [here](https://drive.google.com/file/d/16XmLWzWnmRa0hYVX0DHtdY7xHX9ox5Wy/view?usp=sharing) and can accessed by importing it using [Insomnia](https://insomnia.rest/).

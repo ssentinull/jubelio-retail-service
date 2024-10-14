@@ -9,4 +9,9 @@ export function registerWarehouseRoutes(
     '/warehouses',
     warehouseController.createWarehouse.bind(warehouseController),
   )
+
+  fastify.get(
+    '/warehouses/:warehouse_id/inventories',
+    warehouseController.getWarehouseInventories.bind(warehouseController),
+  )
 }
