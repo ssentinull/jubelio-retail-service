@@ -130,12 +130,7 @@ export class InventoryController {
         return reply.status(401).send(errorResponse('invalid token'))
       }
 
-      const params = request.params as Omit<
-        GetRequest,
-        'product_id' | 'warehouse_id'
-      >
-
-      console.log(params)
+      const params = request.params as GetRequest
       const inventory = await this.inventoryUsecase.getInventoryMovements(
         user,
         params,

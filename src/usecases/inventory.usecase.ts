@@ -130,7 +130,7 @@ export class InventoryUsecase implements IInventoryUsecase {
 
   async getInventoryMovements(
     user: User,
-    params: Omit<GetRequest, 'product_id' | 'warehouse_id'>,
+    params: GetRequest,
   ): Promise<InventoryMovement[]> {
     try {
       const existingUser = await this.userRepository.getUserById(user.id)

@@ -60,9 +60,7 @@ export class InventoryRepository implements IInventoryRepository {
     ])
   }
 
-  getInventoryMovements(
-    params: Omit<GetRequest, 'product_id' | 'warehouse_id'>,
-  ): Promise<InventoryMovement[]> {
+  getInventoryMovements(params: GetRequest): Promise<InventoryMovement[]> {
     const query = `SELECT id, movement_type, movement_size, created_at, created_by FROM inventory_movements WHERE inventory_id = $1`
     return this.dbAdapter.query<InventoryMovement>(query, [params.inventory_id])
   }

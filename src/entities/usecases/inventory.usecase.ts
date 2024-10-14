@@ -11,6 +11,6 @@ export interface IInventoryUsecase {
   moveInventory(user: User, payload: MoveRequest): Promise<InventoryMovement>
   getInventoryMovements(
     user: User,
-    params: Omit<GetRequest, 'product_id' | 'warehouse_id'>,
+    params: GetRequest,
   ): Promise<InventoryMovement[]>
 }
