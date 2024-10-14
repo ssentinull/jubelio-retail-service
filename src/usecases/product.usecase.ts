@@ -39,6 +39,7 @@ export class ProductUsecase implements IProductUsecase {
       }
 
       payload.user_id = user.id
+      payload.created_at = new Date().toLocaleString()
       payload.created_by = user.email
 
       return this.productRepository.createProduct(payload)
@@ -55,6 +56,7 @@ export class ProductUsecase implements IProductUsecase {
         throw constants.DATA_NOT_FOUND
       }
 
+      existingProduct.deleted_at = new Date().toLocaleString()
       existingProduct.deleted_by = user.email
 
       return this.productRepository.deleteProduct(existingProduct)

@@ -25,6 +25,7 @@ export class WarehouseUsecase implements IWarehouseUsecase {
       }
 
       payload.user_id = user.id
+      payload.created_at = new Date().toLocaleString()
       payload.created_by = user.email
 
       return this.warehouseRepository.createWarehouse(payload)

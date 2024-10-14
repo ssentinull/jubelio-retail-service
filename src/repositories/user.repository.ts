@@ -21,13 +21,12 @@ export class UserRepository implements IUserRepository {
   }
 
   async createUser(user: Omit<User, 'id'>): Promise<User> {
-    const createdAt = new Date()
     const query = `INSERT INTO users (name, email, password, created_at) VALUES ($1, $2, $3, $4) RETURNING id, name, email, created_at`
     return this.dbAdapter.insert<User>(query, [
       user.name,
       user.email,
       user.password,
-      createdAt,
+      user.created_at,
     ])
   }
 

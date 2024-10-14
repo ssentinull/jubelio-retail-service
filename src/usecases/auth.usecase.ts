@@ -30,6 +30,7 @@ export class AuthUsecase implements IAuthUsecase {
       const hashedPassword = await bcrypt.hash(user.password, salt)
 
       user.password = hashedPassword
+      user.created_at = new Date().toLocaleString()
 
       return this.userRepository.createUser(user)
     } catch (error) {
