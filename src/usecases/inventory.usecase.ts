@@ -55,6 +55,7 @@ export class InventoryUsecase implements IInventoryUsecase {
       const getInventoryParams: GetRequest = {
         product_id: payload.product_id,
         warehouse_id: payload.warehouse_id,
+        inventory_id: 0,
       }
 
       const existingInventory =
@@ -121,6 +122,30 @@ export class InventoryUsecase implements IInventoryUsecase {
       }
 
       return this.inventoryRepository.createInventoryMovement(inventoryMovement)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  async getInventoryMovements(
+    user: User,
+    params: Omit<GetRequest, 'product_id' | 'warehouse_id'>,
+  ): Promise<InventoryMovement[]> {
+    try {
+      const existingUser = await this.userRepository.getUserById(user.id)
+      if (!existingUser) {
+        throw errorConstants.DATA_NOT_FOUND
+      }
+
+      const existingInventory = await this.inventoryRepository.getInventoryById(
+        params.inventory_id,
+      )
+      if (!existingInventory) {
+        throw errorConstants.DATA_NOT_FOUND
+      }
+
+      return this.inventoryRepository.getInventoryMovements(params)
     } catch (error) {
       console.log(error)
       throw error

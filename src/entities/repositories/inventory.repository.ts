@@ -12,4 +12,7 @@ export interface IInventoryRepository {
   createInventoryMovement(
     inventoryMovement: Omit<InventoryMovement, 'id'>,
   ): Promise<InventoryMovement>
+  getInventoryMovements(
+    params: Omit<GetRequest, 'product_id' | 'warehouse_id'>,
+  ): Promise<InventoryMovement[]>
 }

@@ -28,6 +28,7 @@ interface MoveRequest {
 }
 
 interface GetRequest {
+  inventory_id: number
   product_id: number
   warehouse_id: number
 }
